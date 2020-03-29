@@ -27,11 +27,17 @@ class StringParser {
             open = k
             mapOfClose.filterValues { it == mapOfSigns[v] }.keys.forEach {
                 if (it > open) {
-                    
                     close = it
-                    array.add(inputString.substring(open + 1, close))
+                    if (inputString.substring(open+1, close)
+                            .indexOf(mapOfSigns[v].toString()) < inputString.substring(open+1, close)
+                            .indexOf(v) && mapOfSigns[v].toString() in inputString.substring(
+                            open+1, close
+                        )
+                    ) {
+                    } else {
+                        array.add(inputString.substring(open + 1, close))
+                    }
                 }
-                //mapOfClose.remove(close)
             }
         }
         return array.toTypedArray()
