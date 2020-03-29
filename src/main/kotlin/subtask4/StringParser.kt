@@ -7,10 +7,10 @@ class StringParser {
 
     // TODO: Complete the following function
     fun getResult(inputString: String): Array<String> {
-        val array:MutableList<String> = mutableListOf()
-        val tempArray = inputString.toList().map {it.toString()}
-        val mapOfOpen:SortedMap<Int, String> = sortedMapOf()
-        val mapOfClose:MutableMap<Int, String> = mutableMapOf()
+        val array: MutableList<String> = mutableListOf()
+        val tempArray = inputString.toList().map { it.toString() }
+        val mapOfOpen: SortedMap<Int, String> = sortedMapOf()
+        val mapOfClose: MutableMap<Int, String> = mutableMapOf()
         val mapOfSigns: Map<String, String> = mapOf("<" to ">", "[" to "]", "(" to ")")
         var open = 0
         var close = 0
@@ -25,11 +25,15 @@ class StringParser {
 
         for ((k, v) in mapOfOpen) {
             open = k
-            close = mapOfClose.filterValues { it == mapOfSigns[v] }.keys.min()!!
-            array.add(inputString.substring(open + 1, close))
-            mapOfClose.remove(close)
+            mapOfClose.filterValues { it == mapOfSigns[v] }.keys.forEach {
+                if (it > open) {
+                    
+                    close = it
+                    array.add(inputString.substring(open + 1, close))
+                }
+                //mapOfClose.remove(close)
+            }
         }
-
         return array.toTypedArray()
     }
 }
